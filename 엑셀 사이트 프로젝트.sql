@@ -1,4 +1,4 @@
-﻿CREATE TABLE `users` (
+CREATE TABLE `users` (
 	`userPK`	integer	NOT NULL,
 	`userid`	varchar	NOT NULL,
 	`userpassword`	varchar	NOT NULL,
@@ -7,7 +7,7 @@
 	`userbirth`	integer	NOT NULL,
 	`usergender`	boolean	NOT NULL,
 	`userdept`	varchar	NOT NULL,
-	`Field`	VARCHAR(255)	NULL,
+	`Field`	integer	NOT NULL,
 	`usercheck`	boolean	NOT NULL	DEFAULT 0
 );
 
