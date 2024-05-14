@@ -4,51 +4,79 @@ CREATE TABLE `users` (
 	`userpassword`	varchar	NOT NULL,
 	`useremail`	varchar	NOT NULL,
 	`username`	varchar	NOT NULL,
-	`userbirth`	integer	NOT NULL,
+	`userbirth`	date	NOT NULL,
 	`usergender`	boolean	NOT NULL,
 	`userdept`	varchar	NOT NULL,
-	`Field`	integer	NOT NULL,
-	`usercheck`	boolean	NOT NULL	DEFAULT 0
+	`userdate`	date	NOT NULL,
+	`usercheck`	integer	NOT NULL	DEFAULT 0	COMMENT '0:대기,1:승인',
+	`user_positionno`	integer	NOT NULL
 );
 
-CREATE TABLE `administrator` (
-	`adPK`	integer	NOT NULL,
-	`adid`	varchar	NOT NULL,
-	`adpassword`	varchar	NOT NULL,
-	`ademail`	varchar	NOT NULL,
-	`adname`	varchar	NOT NULL,
-	`adbirth`	integer	NOT NULL,
-	`adgender`	boolean	NOT NULL,
-	`addept`	varchar	NOT NULL
+CREATE TABLE `estimation2` (
+	`est2PK`	integer	NOT NULL,
+	`est2sep`	varchar	NOT NULL,
+	`est2material`	varchar	NOT NULL,
+	`est2reviewtype`	varchar	NOT NULL,
+	`est2floorplanno`	integer	NOT NULL	COMMENT '번호라서int적음 var가능',
+	`est2volapp`	varchar	NOT NULL,
+	`est2note`	varchar	NULL,
+	`est2refer`	varchar	NULL,
+	`est2_costomerno`	integer	NOT NULL,
+	`est2_userPK`	integer	NOT NULL,
+	`est2_projectno`	integer	NOT NULL
 );
 
-CREATE TABLE `Untitled` (
-	`pjPK`	integer	NOT NULL,
-	`adPK`	integer	NOT NULL,
+CREATE TABLE `estimation` (
+	`estPK`	integer	NOT NULL,
 	`Key`	VARCHAR(255)	NOT NULL,
-	`userPK`	integer	NOT NULL,
-	`projecttitle`	VARCHAR(255)	NULL,
-	`Field4`	VARCHAR(255)	NULL	COMMENT '프로젝트의 자세한 내용 기술필요',
-	`Field5`	VARCHAR(255)	NULL
-);
-
-CREATE TABLE `CopyOfUntitled` (
-	`pjPK`	integer	NOT NULL,
-	`adPK`	integer	NOT NULL,
-	`userPK`	integer	NOT NULL,
-	`Key`	VARCHAR(255)	NOT NULL,
-	`projectname`	VARCHAR(255)	NULL,
-	`Field4`	VARCHAR(255)	NULL	COMMENT '프로젝트의 자세한 내용 기술필요',
-	`Field5`	VARCHAR(255)	NULL
+	`Key2`	VARCHAR(255)	NOT NULL,
+	`estpart`	varchar	NOT NULL,
+	`estfloor`	varchar	NOT NULL	COMMENT '층 수만 써있으면 int 가능',
+	`estfloorplan`	integer	NOT NULL	COMMENT 'varchar로 바꿔도 됨',
+	`estfloorplanname`	varchar	NOT NULL,
+	`estquestions`	varchar	NULL	COMMENT 'null 가능한지',
+	`estvolapp`	varchar	NULL,
+	`estreply`	varchar	NOT NULL	COMMENT '회신 여부 묻는용이면 int가능',
+	`estrefer`	varchar	NULL,
+	`est_customerno`	integer	NOT NULL,
+	`est_userPK`	integer	NOT NULL,
+	`est_projectno`	integer	NOT NULL
 );
 
 CREATE TABLE `Untitled2` (
+	`customerno`	integer	NOT NULL,
+	`userPK2`	integer	NOT NULL,
+	`customername`	varchar	NOT NULL
+);
+
+CREATE TABLE `project` (
+	`projectno`	integer	NOT NULL,
+	`projectname`	varchar	NOT NULL,
+	`projectest`	varchar	NOT NULL,
+	`projectfloorplanno`	integer	NOT NULL,
+	`projectvolapp`	varchar	NOT NULL,
+	`project_userPK`	integer	NOT NULL,
+	`project_customerno`	integer	NOT NULL
+);
+
+CREATE TABLE `position` (
+	`positionno`	integer	NOT NULL,
+	`positionname`	varchar	NOT NULL,
+	`positionrank`	varchar	NOT NULL,
+	`positionrankno`	integer	NOT NULL
+);
+
+CREATE TABLE `seperate` (
 	`Key`	VARCHAR(255)	NOT NULL,
-	`Key2`	VARCHAR(255)	NOT NULL,
 	`Field`	VARCHAR(255)	NULL
 );
 
-CREATE TABLE `Untitled3` (
+CREATE TABLE `CopyOfseperate` (
+	`Key`	VARCHAR(255)	NOT NULL,
+	`Field`	VARCHAR(255)	NULL
+);
+
+CREATE TABLE `CopyOfCopyOfseperate` (
 	`Key`	VARCHAR(255)	NOT NULL,
 	`Field`	VARCHAR(255)	NULL
 );
@@ -57,23 +85,35 @@ ALTER TABLE `users` ADD CONSTRAINT `PK_USERS` PRIMARY KEY (
 	`userPK`
 );
 
-ALTER TABLE `administrator` ADD CONSTRAINT `PK_ADMINISTRATOR` PRIMARY KEY (
-	`adPK`
+ALTER TABLE `estimation2` ADD CONSTRAINT `PK_ESTIMATION2` PRIMARY KEY (
+	`est2PK`
 );
 
-ALTER TABLE `Untitled` ADD CONSTRAINT `PK_UNTITLED` PRIMARY KEY (
-	`pjPK`
-);
-
-ALTER TABLE `CopyOfUntitled` ADD CONSTRAINT `PK_COPYOFUNTITLED` PRIMARY KEY (
-	`pjPK`
+ALTER TABLE `estimation` ADD CONSTRAINT `PK_ESTIMATION` PRIMARY KEY (
+	`estPK`
 );
 
 ALTER TABLE `Untitled2` ADD CONSTRAINT `PK_UNTITLED2` PRIMARY KEY (
+	`customerno`
+);
+
+ALTER TABLE `project` ADD CONSTRAINT `PK_PROJECT` PRIMARY KEY (
+	`projectno`
+);
+
+ALTER TABLE `position` ADD CONSTRAINT `PK_POSITION` PRIMARY KEY (
+	`positionno`
+);
+
+ALTER TABLE `seperate` ADD CONSTRAINT `PK_SEPERATE` PRIMARY KEY (
 	`Key`
 );
 
-ALTER TABLE `Untitled3` ADD CONSTRAINT `PK_UNTITLED3` PRIMARY KEY (
+ALTER TABLE `CopyOfseperate` ADD CONSTRAINT `PK_COPYOFSEPERATE` PRIMARY KEY (
+	`Key`
+);
+
+ALTER TABLE `CopyOfCopyOfseperate` ADD CONSTRAINT `PK_COPYOFCOPYOFSEPERATE` PRIMARY KEY (
 	`Key`
 );
 
