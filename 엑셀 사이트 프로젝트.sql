@@ -1,4 +1,4 @@
-CREATE TABLE `users` (
+CREATE TABLE `user` (
 	`userPK`	integer	NOT NULL,
 	`userid`	varchar	NOT NULL,
 	`userpassword`	varchar	NOT NULL,
@@ -23,16 +23,16 @@ CREATE TABLE `estimation2` (
 	`est2refer`	varchar	NULL,
 	`est2_costomerno`	integer	NOT NULL,
 	`est2_userPK`	integer	NOT NULL,
-	`est2_projectno`	integer	NOT NULL
+	`projectPK`	integer	NOT NULL
 );
 
 CREATE TABLE `estimation` (
 	`estPK`	integer	NOT NULL,
-	`Key`	VARCHAR(255)	NOT NULL,
-	`Key2`	VARCHAR(255)	NOT NULL,
+	`estsep`	varchar	NOT NULL,
+	`estsep2`	varchar	NOT NULL,
 	`estpart`	varchar	NOT NULL,
 	`estfloor`	varchar	NOT NULL	COMMENT '층 수만 써있으면 int 가능',
-	`estfloorplan`	integer	NOT NULL	COMMENT 'varchar로 바꿔도 됨',
+	`estfloorplan`	varchar	NOT NULL	COMMENT 'varchar로 바꿔도 됨',
 	`estfloorplanname`	varchar	NOT NULL,
 	`estquestions`	varchar	NULL	COMMENT 'null 가능한지',
 	`estvolapp`	varchar	NULL,
@@ -40,21 +40,18 @@ CREATE TABLE `estimation` (
 	`estrefer`	varchar	NULL,
 	`est_customerno`	integer	NOT NULL,
 	`est_userPK`	integer	NOT NULL,
-	`est_projectno`	integer	NOT NULL
+	`projectPK`	integer	NOT NULL
 );
 
-CREATE TABLE `Untitled2` (
-	`customerno`	integer	NOT NULL,
+CREATE TABLE `customer` (
+	`customerPK`	integer	NOT NULL,
 	`userPK2`	integer	NOT NULL,
 	`customername`	varchar	NOT NULL
 );
 
 CREATE TABLE `project` (
-	`projectno`	integer	NOT NULL,
-	`projectname`	varchar	NOT NULL,
-	`projectest`	varchar	NOT NULL,
-	`projectfloorplanno`	integer	NOT NULL,
-	`projectvolapp`	varchar	NOT NULL,
+	`projectPK`	integer	NOT NULL,
+	`projecttitle`	varchar	NOT NULL,
 	`project_userPK`	integer	NOT NULL,
 	`project_customerno`	integer	NOT NULL
 );
@@ -66,22 +63,13 @@ CREATE TABLE `position` (
 	`positionrankno`	integer	NOT NULL
 );
 
-CREATE TABLE `seperate` (
-	`Key`	VARCHAR(255)	NOT NULL,
-	`Field`	VARCHAR(255)	NULL
+CREATE TABLE `reference` (
+	`referencePK`	integer	NOT NULL,
+	`image`	image	NULL,
+	`Field2`	VARCHAR(255)	NULL
 );
 
-CREATE TABLE `CopyOfseperate` (
-	`Key`	VARCHAR(255)	NOT NULL,
-	`Field`	VARCHAR(255)	NULL
-);
-
-CREATE TABLE `CopyOfCopyOfseperate` (
-	`Key`	VARCHAR(255)	NOT NULL,
-	`Field`	VARCHAR(255)	NULL
-);
-
-ALTER TABLE `users` ADD CONSTRAINT `PK_USERS` PRIMARY KEY (
+ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
 	`userPK`
 );
 
@@ -93,27 +81,19 @@ ALTER TABLE `estimation` ADD CONSTRAINT `PK_ESTIMATION` PRIMARY KEY (
 	`estPK`
 );
 
-ALTER TABLE `Untitled2` ADD CONSTRAINT `PK_UNTITLED2` PRIMARY KEY (
-	`customerno`
+ALTER TABLE `customer` ADD CONSTRAINT `PK_CUSTOMER` PRIMARY KEY (
+	`customerPK`
 );
 
 ALTER TABLE `project` ADD CONSTRAINT `PK_PROJECT` PRIMARY KEY (
-	`projectno`
+	`projectPK`
 );
 
 ALTER TABLE `position` ADD CONSTRAINT `PK_POSITION` PRIMARY KEY (
 	`positionno`
 );
 
-ALTER TABLE `seperate` ADD CONSTRAINT `PK_SEPERATE` PRIMARY KEY (
-	`Key`
-);
-
-ALTER TABLE `CopyOfseperate` ADD CONSTRAINT `PK_COPYOFSEPERATE` PRIMARY KEY (
-	`Key`
-);
-
-ALTER TABLE `CopyOfCopyOfseperate` ADD CONSTRAINT `PK_COPYOFCOPYOFSEPERATE` PRIMARY KEY (
-	`Key`
+ALTER TABLE `reference` ADD CONSTRAINT `PK_REFERENCE` PRIMARY KEY (
+	`referencePK`
 );
 
