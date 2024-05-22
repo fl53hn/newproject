@@ -6,9 +6,9 @@ CREATE TABLE `user` (
 	`username`	varchar	NOT NULL,
 	`userbirth`	date	NOT NULL,
 	`usergender`	boolean	NOT NULL,
-	`userdept`	varchar	NOT NULL,
 	`userdate`	date	NOT NULL,
 	`usercheck`	integer	NOT NULL	DEFAULT 0	COMMENT '0:대기,1:승인',
+	`deptno`	integer	NOT NULL,
 	`user_positionno`	integer	NOT NULL
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE `estimation2` (
 	`est2sep`	varchar	NOT NULL,
 	`est2material`	varchar	NOT NULL,
 	`est2reviewtype`	varchar	NOT NULL,
-	`est2floorplanno`	integer	NOT NULL	COMMENT '번호라서int적음 var가능',
+	`est2floorplanno`	varchar	NOT NULL,
 	`est2volapp`	varchar	NOT NULL,
 	`est2note`	varchar	NULL,
 	`est2refer`	varchar	NULL,
@@ -32,41 +32,65 @@ CREATE TABLE `estimation` (
 	`estsep2`	varchar	NOT NULL,
 	`estpart`	varchar	NOT NULL,
 	`estfloor`	varchar	NOT NULL	COMMENT '층 수만 써있으면 int 가능',
-	`estfloorplan`	varchar	NOT NULL	COMMENT 'varchar로 바꿔도 됨',
+	`estfloorplan`	varchar	NOT NULL,
 	`estfloorplanname`	varchar	NOT NULL,
 	`estquestions`	varchar	NULL	COMMENT 'null 가능한지',
 	`estvolapp`	varchar	NULL,
 	`estreply`	varchar	NOT NULL	COMMENT '회신 여부 묻는용이면 int가능',
-	`estrefer`	varchar	NULL,
+	`estimage`	varchar	NULL,
+	`estrewriter`	varchar	NOT NULL,
 	`est_customerno`	integer	NOT NULL,
 	`est_userPK`	integer	NOT NULL,
-	`projectPK`	integer	NOT NULL
+	`projectPK`	integer	NOT NULL,
+	`referencePK`	integer	NOT NULL
 );
 
-CREATE TABLE `customer` (
-	`customerPK`	integer	NOT NULL,
-	`userPK2`	integer	NOT NULL,
-	`customername`	varchar	NOT NULL
+CREATE TABLE `company` (
+	`companyPK`	integer	NOT NULL,
+	`companyname`	varchar	NOT NULL,
+	`company_userPK`	integer	NOT NULL
 );
 
 CREATE TABLE `project` (
 	`projectPK`	integer	NOT NULL,
-	`projecttitle`	varchar	NOT NULL,
+	`projectname`	varchar	NOT NULL,
 	`project_userPK`	integer	NOT NULL,
-	`project_customerno`	integer	NOT NULL
+	`project_customerno`	integer	NOT NULL,
+	`project_managerPK`	integer	NOT NULL
 );
 
 CREATE TABLE `position` (
 	`positionno`	integer	NOT NULL,
 	`positionname`	varchar	NOT NULL,
-	`positionrank`	varchar	NOT NULL,
 	`positionrankno`	integer	NOT NULL
 );
 
 CREATE TABLE `reference` (
 	`referencePK`	integer	NOT NULL,
-	`image`	image	NULL,
-	`Field2`	VARCHAR(255)	NULL
+	`ref`	varchar	NULL	COMMENT '이미지path를 참조에 각각 삽입',
+	`ref2`	varchar	NULL	COMMENT '참조가 null이 아닌 이미지경로를 불러옴',
+	`ref3`	varchar	NULL	COMMENT '불러온 이미지를 띄워줌',
+	`ref4`	varchar	NULL,
+	`ref5`	varchar	NULL,
+	`ref6`	varchar	NULL,
+	`ref7`	varchar	NULL,
+	`ref8`	varchar	NULL,
+	`ref9`	varchar	NULL,
+	`ref10`	varchar	NULL
+);
+
+CREATE TABLE `dept` (
+	`deptno`	integer	NOT NULL,
+	`deptname`	varchar	NOT NULL
+);
+
+CREATE TABLE `manager` (
+	`managerPK`	integer	NOT NULL,
+	`managername`	varchar	NOT NULL,
+	`managerphone`	varchar	NOT NULL,
+	`manageremail`	varchar	NOT NULL,
+	`managerdept`	varchar	NOT NULL,
+	`managercheck`	integer	NOT NULL
 );
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
@@ -81,8 +105,8 @@ ALTER TABLE `estimation` ADD CONSTRAINT `PK_ESTIMATION` PRIMARY KEY (
 	`estPK`
 );
 
-ALTER TABLE `customer` ADD CONSTRAINT `PK_CUSTOMER` PRIMARY KEY (
-	`customerPK`
+ALTER TABLE `company` ADD CONSTRAINT `PK_COMPANY` PRIMARY KEY (
+	`companyPK`
 );
 
 ALTER TABLE `project` ADD CONSTRAINT `PK_PROJECT` PRIMARY KEY (
@@ -97,6 +121,11 @@ ALTER TABLE `reference` ADD CONSTRAINT `PK_REFERENCE` PRIMARY KEY (
 	`referencePK`
 );
 
+ALTER TABLE `dept` ADD CONSTRAINT `PK_DEPT` PRIMARY KEY (
+	`deptno`
+);
 
+ALTER TABLE `manager` ADD CONSTRAINT `PK_MANAGER` PRIMARY KEY (
+	`managerPK`
+);
 
- 	
