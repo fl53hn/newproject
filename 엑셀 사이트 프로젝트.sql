@@ -106,3 +106,5 @@ ALTER TABLE `manager` ADD CONSTRAINT `PK_MANAGER` PRIMARY KEY (
 	`managerPK`
 );
 
+
+
