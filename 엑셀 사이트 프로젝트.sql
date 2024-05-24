@@ -12,50 +12,31 @@ CREATE TABLE `user` (
 	`user_positionno`	integer	NOT NULL
 );
 
-CREATE TABLE `estimation2` (
-	`est2PK`	integer	NOT NULL,
-	`est2sep`	varchar	NOT NULL,
-	`est2material`	varchar	NOT NULL,
-	`est2reviewtype`	varchar	NOT NULL,
-	`est2floorplanno`	varchar	NOT NULL,
-	`est2volapp`	varchar	NOT NULL,
-	`est2note`	varchar	NULL,
-	`est2refer`	varchar	NULL,
-	`est2_costomerno`	integer	NOT NULL,
-	`est2_userPK`	integer	NOT NULL,
-	`projectPK`	integer	NOT NULL
-);
-
 CREATE TABLE `estimation` (
 	`estPK`	integer	NOT NULL,
 	`estsep`	varchar	NOT NULL,
 	`estsep2`	varchar	NOT NULL,
-	`estpart`	varchar	NOT NULL,
-	`estfloor`	varchar	NOT NULL	COMMENT '층 수만 써있으면 int 가능',
-	`estfloorplan`	varchar	NOT NULL,
-	`estfloorplanname`	varchar	NOT NULL,
+	`estpart`	varchar	NULL,
+	`estfloor`	varchar	NULL	COMMENT '층 수만 써있으면 int 가능',
+	`estfloorplan`	varchar	NULL,
+	`estfloorplanname`	varchar	NULL,
 	`estquestions`	varchar	NULL	COMMENT 'null 가능한지',
 	`estvolapp`	varchar	NULL,
-	`estreply`	varchar	NOT NULL	COMMENT '회신 여부 묻는용이면 int가능',
-	`estimage`	varchar	NULL,
-	`estrewriter`	varchar	NOT NULL,
-	`est_customerno`	integer	NOT NULL,
+	`estreply`	varchar	NULL	COMMENT '회신 여부 묻는용이면 int가능',
+	`estrewriter`	varchar	NULL,
 	`est_userPK`	integer	NOT NULL,
 	`projectPK`	integer	NOT NULL,
-	`referencePK`	integer	NOT NULL
+	`referencePK`	integer	NULL
 );
 
 CREATE TABLE `company` (
 	`companyPK`	integer	NOT NULL,
-	`companyname`	varchar	NOT NULL,
-	`company_userPK`	integer	NOT NULL
+	`companyname`	varchar	NOT NULL
 );
 
 CREATE TABLE `project` (
 	`projectPK`	integer	NOT NULL,
 	`projectname`	varchar	NOT NULL,
-	`project_userPK`	integer	NOT NULL,
-	`project_customerno`	integer	NOT NULL,
 	`project_managerPK`	integer	NOT NULL
 );
 
@@ -90,15 +71,11 @@ CREATE TABLE `manager` (
 	`managerphone`	varchar	NOT NULL,
 	`manageremail`	varchar	NOT NULL,
 	`managerdept`	varchar	NOT NULL,
-	`managercheck`	integer	NOT NULL
+	`companyPK`	integer	NOT NULL
 );
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
 	`userPK`
-);
-
-ALTER TABLE `estimation2` ADD CONSTRAINT `PK_ESTIMATION2` PRIMARY KEY (
-	`est2PK`
 );
 
 ALTER TABLE `estimation` ADD CONSTRAINT `PK_ESTIMATION` PRIMARY KEY (
