@@ -74,6 +74,21 @@ CREATE TABLE `manager` (
 	`companyPK`	integer	NOT NULL
 );
 
+CREATE TABLE `authority` (
+	`authorityPK`	integer	NOT NULL,
+	`ref`	varchar	NULL,
+	`ref2`	varchar	NULL,
+	`ref3`	varchar	NULL,
+	`ref4`	varchar	NULL,
+	`ref5`	varchar	NULL,
+	`ref6`	varchar	NULL,
+	`ref7`	varchar	NULL,
+	`ref8`	varchar	NULL,
+	`ref9`	varchar	NULL,
+	`ref10`	varchar	NULL,
+	`estPK`	integer	NOT NULL
+);
+
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
 	`userPK`
 );
@@ -106,8 +121,7 @@ ALTER TABLE `manager` ADD CONSTRAINT `PK_MANAGER` PRIMARY KEY (
 	`managerPK`
 );
 
-
-
-
-
+ALTER TABLE `authority` ADD CONSTRAINT `PK_AUTHORITY` PRIMARY KEY (
+	`authorityPK`
+);
 
