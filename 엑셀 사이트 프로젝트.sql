@@ -37,6 +37,11 @@ CREATE TABLE `company` (
 CREATE TABLE `project` (
 	`projectPK`	integer	NOT NULL,
 	`projectname`	varchar	NOT NULL,
+	`projectmanager`	varchar	NOT NULL,
+	`projectPM`	varchar	NOT NULL,
+	`projectstartline`	date	NOT NULL,
+	`projectnote`	varchar	NOT NULL,
+	`projectstate`	varchar	NOT NULL,
 	`project_managerPK`	integer	NOT NULL
 );
 
@@ -76,16 +81,7 @@ CREATE TABLE `manager` (
 
 CREATE TABLE `authority` (
 	`authorityPK`	integer	NOT NULL,
-	`ref`	varchar	NULL,
-	`ref2`	varchar	NULL,
-	`ref3`	varchar	NULL,
-	`ref4`	varchar	NULL,
-	`ref5`	varchar	NULL,
-	`ref6`	varchar	NULL,
-	`ref7`	varchar	NULL,
-	`ref8`	varchar	NULL,
-	`ref9`	varchar	NULL,
-	`ref10`	varchar	NULL,
+	`userPK`	integer	NOT NULL,
 	`estPK`	integer	NOT NULL
 );
 
