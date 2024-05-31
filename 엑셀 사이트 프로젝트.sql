@@ -1,4 +1,4 @@
-CREATE TABLE `user` (
+CREATE TABLE `users` (
 	`userPK`	integer	NOT NULL,
 	`userid`	varchar	NOT NULL,
 	`userpassword`	varchar	NOT NULL,
@@ -9,24 +9,23 @@ CREATE TABLE `user` (
 	`userdate`	date	NOT NULL,
 	`usercheck`	integer	NOT NULL	DEFAULT 0	COMMENT '0:대기,1:승인',
 	`deptno`	integer	NOT NULL,
-	`user_positionno`	integer	NOT NULL
+	`user_pstno`	integer	NOT NULL
 );
 
 CREATE TABLE `estimation` (
 	`estPK`	integer	NOT NULL,
-	`estsep`	varchar	NOT NULL,
-	`estsep2`	varchar	NOT NULL,
+	`estsep`	varchar	NULL,
+	`estsep2`	varchar	NULL,
 	`estpart`	varchar	NULL,
-	`estfloor`	varchar	NULL	COMMENT '층 수만 써있으면 int 가능',
+	`estfloor`	varchar	NULL,
 	`estfloorplan`	varchar	NULL,
-	`estfloorplanname`	varchar	NULL,
-	`estquestions`	varchar	NULL	COMMENT 'null 가능한지',
+	`estname`	varchar	NULL,
+	`estquestion`	varchar	NULL,
 	`estvolapp`	varchar	NULL,
-	`estreply`	varchar	NULL	COMMENT '회신 여부 묻는용이면 int가능',
+	`estreply`	varchar	NULL,
 	`estrewriter`	varchar	NULL,
 	`est_userPK`	integer	NOT NULL,
-	`projectPK`	integer	NOT NULL,
-	`referencePK`	integer	NULL
+	`projectPK`	integer	NOT NULL
 );
 
 CREATE TABLE `company` (
@@ -35,34 +34,28 @@ CREATE TABLE `company` (
 );
 
 CREATE TABLE `project` (
-	`projectPK`	integer	NOT NULL,
-	`projectname`	varchar	NOT NULL,
-	`projectmanager`	varchar	NOT NULL,
-	`projectPM`	varchar	NOT NULL,
-	`projectstartline`	date	NOT NULL,
-	`projectnote`	varchar	NOT NULL,
-	`projectstate`	varchar	NOT NULL,
-	`project_managerPK`	integer	NOT NULL
+	`pjPK`	integer	NOT NULL,
+	`pjname`	varchar	NOT NULL,
+	`pjmanager`	varchar	NOT NULL,
+	`pjPM`	varchar	NOT NULL,
+	`pjstartline`	date	NOT NULL,
+	`projectnote`	varchar	NULL,
+	`project_managerPK`	integer	NOT NULL,
+	`progressPK`	integer	NOT NULL
 );
 
 CREATE TABLE `position` (
-	`positionno`	integer	NOT NULL,
-	`positionname`	varchar	NOT NULL,
-	`positionrankno`	integer	NOT NULL
+	`pstno`	integer	NOT NULL,
+	`pstname`	varchar	NOT NULL,
+	`pst_rankPK`	integer	NOT NULL
 );
 
 CREATE TABLE `reference` (
 	`referencePK`	integer	NOT NULL,
-	`ref`	varchar	NULL	COMMENT '이미지path를 참조에 각각 삽입',
-	`ref2`	varchar	NULL	COMMENT '참조가 null이 아닌 이미지경로를 불러옴',
-	`ref3`	varchar	NULL	COMMENT '불러온 이미지를 띄워줌',
-	`ref4`	varchar	NULL,
-	`ref5`	varchar	NULL,
-	`ref6`	varchar	NULL,
-	`ref7`	varchar	NULL,
-	`ref8`	varchar	NULL,
-	`ref9`	varchar	NULL,
-	`ref10`	varchar	NULL
+	`original_file_name`	varchar	NOT NULL,
+	`stored_file_name`	varchar	NOT NULL,
+	`filesize`	long	NOT NULL,
+	`estPK`	integer	NOT NULL
 );
 
 CREATE TABLE `dept` (
@@ -73,19 +66,35 @@ CREATE TABLE `dept` (
 CREATE TABLE `manager` (
 	`managerPK`	integer	NOT NULL,
 	`managername`	varchar	NOT NULL,
-	`managerphone`	varchar	NOT NULL,
-	`manageremail`	varchar	NOT NULL,
+	`managerphone`	varchar	NULL,
+	`manageremail`	varchar	NULL,
 	`managerdept`	varchar	NOT NULL,
 	`companyPK`	integer	NOT NULL
 );
 
-CREATE TABLE `authority` (
-	`authorityPK`	integer	NOT NULL,
-	`userPK`	integer	NOT NULL,
-	`estPK`	integer	NOT NULL
+CREATE TABLE `userauthority` (
+	`uaPK`	integer	NOT NULL,
+	`ua_userPK`	integer	NOT NULL,
+	`ua_authorityPK`	integer	NOT NULL,
+	`ua_projectPK`	integer	NOT NULL
 );
 
-ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
+CREATE TABLE `authority` (
+	`authorityPK`	integer	NOT NULL,
+	`authorityname`	varchar	NOT NULL
+);
+
+CREATE TABLE `progress` (
+	`progressPK`	integer	NOT NULL,
+	`progressname`	varchar	NOT NULL
+);
+
+CREATE TABLE `rank` (
+	`rankPK`	integer	NOT NULL,
+	`rankname`	varchar	NOT NULL
+);
+
+ALTER TABLE `users` ADD CONSTRAINT `PK_USERS` PRIMARY KEY (
 	`userPK`
 );
 
@@ -98,11 +107,11 @@ ALTER TABLE `company` ADD CONSTRAINT `PK_COMPANY` PRIMARY KEY (
 );
 
 ALTER TABLE `project` ADD CONSTRAINT `PK_PROJECT` PRIMARY KEY (
-	`projectPK`
+	`pjPK`
 );
 
 ALTER TABLE `position` ADD CONSTRAINT `PK_POSITION` PRIMARY KEY (
-	`positionno`
+	`pstno`
 );
 
 ALTER TABLE `reference` ADD CONSTRAINT `PK_REFERENCE` PRIMARY KEY (
@@ -117,7 +126,19 @@ ALTER TABLE `manager` ADD CONSTRAINT `PK_MANAGER` PRIMARY KEY (
 	`managerPK`
 );
 
+ALTER TABLE `userauthority` ADD CONSTRAINT `PK_USERAUTHORITY` PRIMARY KEY (
+	`uaPK`
+);
+
 ALTER TABLE `authority` ADD CONSTRAINT `PK_AUTHORITY` PRIMARY KEY (
 	`authorityPK`
+);
+
+ALTER TABLE `progress` ADD CONSTRAINT `PK_PROGRESS` PRIMARY KEY (
+	`progressPK`
+);
+
+ALTER TABLE `rank` ADD CONSTRAINT `PK_RANK` PRIMARY KEY (
+	`rankPK`
 );
 
