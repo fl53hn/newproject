@@ -1,146 +1,109 @@
-CREATE TABLE `users` (
-	`userPK`	integer	NOT NULL,
-	`userid`	varchar	NOT NULL,
-	`userpassword`	varchar	NOT NULL,
-	`useremail`	varchar	NOT NULL,
-	`username`	varchar	NOT NULL,
-	`userbirth`	date	NOT NULL,
-	`usergender`	boolean	NOT NULL,
-	`userdate`	date	NOT NULL,
-	`usercheck`	integer	NOT NULL	DEFAULT 0	COMMENT '0:대기,1:승인',
-	`deptno`	integer	NOT NULL,
-	`user_pstno`	integer	NOT NULL
+drop database if exists nrglobalsite;
+create database nrglobalsite;
+
+use nrglobalsite;
+
+DROP TABLE IF EXISTS rankTb;
+CREATE TABLE rankTb (
+   rankPK      int      NOT NULL   AUTO_INCREMENT PRIMARY KEY,
+   rankName   varchar(10)   NOT NULL
 );
 
-CREATE TABLE `estimation` (
-	`estPK`	integer	NOT NULL,
-	`estsep`	varchar	NULL,
-	`estsep2`	varchar	NULL,
-	`estpart`	varchar	NULL,
-	`estfloor`	varchar	NULL,
-	`estfloorplan`	varchar	NULL,
-	`estname`	varchar	NULL,
-	`estquestion`	varchar	NULL,
-	`estvolapp`	varchar	NULL,
-	`estreply`	varchar	NULL,
-	`estrewriter`	varchar	NULL,
-	`est_userPK`	integer	NOT NULL,
-	`projectPK`	integer	NOT NULL
+DROP TABLE IF EXISTS deptTb;
+CREATE TABLE deptTb (
+   deptNo      int      NOT NULL   AUTO_INCREMENT PRIMARY KEY,
+   deptName   varchar(10)   NOT NULL
 );
 
-CREATE TABLE `company` (
-	`companyPK`	integer	NOT NULL,
-	`companyname`	varchar	NOT NULL
+DROP TABLE IF EXISTS estimationTb;
+CREATE TABLE estimationTb (
+   estPK   integer   NOT NULL,
+   estSep   varchar(10)   NULL,
+   estSep2   varchar(50)   NULL,
+   estPart   varchar(50)   NULL,
+   estFloor varchar(50) NULL,
+   estFloorplan varchar(50) NULL,
+   estName   varchar(50)   NULL,
+   estQuestion   varchar(50)   NULL,
+   estVolapp   varchar(50)   NULL,
+   estReply   varchar(50)   NULL,
+   estRewriter   varchar(50)   NULL,
+   estUserPK   integer   NOT NULL,
+   estPjPK   integer   NOT NULL
 );
 
-CREATE TABLE `project` (
-	`pjPK`	integer	NOT NULL,
-	`pjname`	varchar	NOT NULL,
-	`pjmanager`	varchar	NOT NULL,
-	`pjPM`	varchar	NOT NULL,
-	`pjstartline`	date	NOT NULL,
-	`projectnote`	varchar	NULL,
-	`project_managerPK`	integer	NOT NULL,
-	`progressPK`	integer	NOT NULL
+CREATE TABLE companyTb (
+   companyPK   integer   NOT NULL,
+   companyName   varchar(50)   NOT NULL
 );
 
-CREATE TABLE `position` (
-	`pstno`	integer	NOT NULL,
-	`pstname`	varchar	NOT NULL,
-	`pst_rankPK`	integer	NOT NULL
+CREATE TABLE projectTb (
+   pjPK   integer   NOT NULL,
+   pjName   varchar(50)   NOT NULL,
+   pjManager   varchar(50)   NOT NULL,
+   pjPm   varchar(50)   NOT NULL,
+   pjStartline   date   NOT NULL,
+   pjNote   varchar(50)   NULL,
+   pjManagerPK   integer   NOT NULL,
+   pjProgressPK   integer   NOT NULL
 );
 
-CREATE TABLE `reference` (
-	`referencePK`	integer	NOT NULL,
-	`original_file_name`	varchar	NOT NULL,
-	`stored_file_name`	varchar	NOT NULL,
-	`filesize`	long	NOT NULL,
-	`estPK`	integer	NOT NULL
+CREATE TABLE referenceTb (
+   referencePK   integer   NOT NULL,
+   original_file_name   varchar(50)   NOT NULL,
+   stored_file_name   varchar(50)   NOT NULL,
+   filesize   long   NOT NULL,
+   refEstPK   integer   NOT NULL
 );
 
-CREATE TABLE `dept` (
-	`deptno`	integer	NOT NULL,
-	`deptname`	varchar	NOT NULL
+CREATE TABLE managerTb (
+   managerPK   integer   NOT NULL,
+   managerName   varchar(50)   NOT NULL,
+   managerPhone   varchar(50)   NULL,
+   managerEmail   varchar(50)   NULL,
+   managerDept   varchar(50)   NOT NULL,
+   managerCompanyPK   integer   NOT NULL
 );
 
-CREATE TABLE `manager` (
-	`managerPK`	integer	NOT NULL,
-	`managername`	varchar	NOT NULL,
-	`managerphone`	varchar	NULL,
-	`manageremail`	varchar	NULL,
-	`managerdept`	varchar	NOT NULL,
-	`companyPK`	integer	NOT NULL
+CREATE TABLE userauthorityTb (
+   uaPK   integer   NOT NULL,
+   uaUserPK   integer   NOT NULL,
+   uaAuthorityPK   integer   NOT NULL,
+   uaProjectPK   integer   NOT NULL
 );
 
-CREATE TABLE `userauthority` (
-	`uaPK`	integer	NOT NULL,
-	`ua_userPK`	integer	NOT NULL,
-	`ua_authorityPK`	integer	NOT NULL,
-	`ua_projectPK`	integer	NOT NULL
+CREATE TABLE authorityTb (
+   authorityPK   integer   NOT NULL,
+   authorityName   varchar(50)   NOT NULL
 );
 
-CREATE TABLE `authority` (
-	`authorityPK`	integer	NOT NULL,
-	`authorityname`	varchar	NOT NULL
+CREATE TABLE progressTb (
+   progressPK   integer   NOT NULL,
+   progressName   varchar(50)   NOT NULL
 );
 
-CREATE TABLE `progress` (
-	`progressPK`	integer	NOT NULL,
-	`progressname`	varchar	NOT NULL
+DROP TABLE IF EXISTS positionTb;
+CREATE TABLE positionTb (
+   pstNo      int      NOT NULL   AUTO_INCREMENT PRIMARY KEY,
+   pstName      varchar(10)   NOT NULL,
+   pstRankPK   int      NOT NULL,
+   CONSTRAINT FK_position_rank FOREIGN KEY(pstRankPk) REFERENCES rankTb(rankPk)
 );
 
-CREATE TABLE `rank` (
-	`rankPK`	integer	NOT NULL,
-	`rankname`	varchar	NOT NULL
+DROP TABLE IF EXISTS usersTb; -- 테이블이 존재하면 삭제
+
+CREATE TABLE usersTb (
+   userPK   bigint      NOT NULL   AUTO_INCREMENT PRIMARY KEY,
+   userId      varchar(100)   NOT NULL,
+   userPassword   varchar(100)   NOT NULL,
+   userEmail   varchar(100)   NOT NULL,
+   userName   varchar(30)   NOT NULL,
+   userBirth   varchar(20)   NOT NULL,
+   userGender   boolean      NOT NULL   DEFAULT 0,
+   userDate   DATETIME   NOT NULL   DEFAULT CURRENT_TIMESTAMP,
+   userCheck   int      NOT NULL   DEFAULT 0   COMMENT '0:대기,1:승인',
+   userDeptPK   int      NOT NULL,
+   userPstPK   int      NOT NULL,
+   CONSTRAINT FK_users_dept FOREIGN KEY(userDeptPK) REFERENCES deptTb(deptNo),
+   CONSTRAINT FK_users_position FOREIGN KEY(userPstPK) REFERENCES positionTb(pstNo)
 );
-
-ALTER TABLE `users` ADD CONSTRAINT `PK_USERS` PRIMARY KEY (
-	`userPK`
-);
-
-ALTER TABLE `estimation` ADD CONSTRAINT `PK_ESTIMATION` PRIMARY KEY (
-	`estPK`
-);
-
-ALTER TABLE `company` ADD CONSTRAINT `PK_COMPANY` PRIMARY KEY (
-	`companyPK`
-);
-
-ALTER TABLE `project` ADD CONSTRAINT `PK_PROJECT` PRIMARY KEY (
-	`pjPK`
-);
-
-ALTER TABLE `position` ADD CONSTRAINT `PK_POSITION` PRIMARY KEY (
-	`pstno`
-);
-
-ALTER TABLE `reference` ADD CONSTRAINT `PK_REFERENCE` PRIMARY KEY (
-	`referencePK`
-);
-
-ALTER TABLE `dept` ADD CONSTRAINT `PK_DEPT` PRIMARY KEY (
-	`deptno`
-);
-
-ALTER TABLE `manager` ADD CONSTRAINT `PK_MANAGER` PRIMARY KEY (
-	`managerPK`
-);
-
-ALTER TABLE `userauthority` ADD CONSTRAINT `PK_USERAUTHORITY` PRIMARY KEY (
-	`uaPK`
-);
-
-ALTER TABLE `authority` ADD CONSTRAINT `PK_AUTHORITY` PRIMARY KEY (
-	`authorityPK`
-);
-
-ALTER TABLE `progress` ADD CONSTRAINT `PK_PROGRESS` PRIMARY KEY (
-	`progressPK`
-);
-
-ALTER TABLE `rank` ADD CONSTRAINT `PK_RANK` PRIMARY KEY (
-	`rankPK`
-);
-
-
-
