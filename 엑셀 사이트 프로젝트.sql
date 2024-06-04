@@ -107,3 +107,4 @@ CREATE TABLE usersTb (
    CONSTRAINT FK_users_dept FOREIGN KEY(userDeptPK) REFERENCES deptTb(deptNo),
    CONSTRAINT FK_users_position FOREIGN KEY(userPstPK) REFERENCES positionTb(pstNo)
 );
+
