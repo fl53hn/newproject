@@ -108,3 +108,4 @@ CREATE TABLE usersTb (
    CONSTRAINT FK_users_position FOREIGN KEY(userPstPK) REFERENCES positionTb(pstNo)
 );
 
+
